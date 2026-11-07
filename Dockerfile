@@ -25,7 +25,11 @@ COPY . .
 
 # Setup environment file
 RUN cp .env.example .env && \
-    sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env
+    sed -i 's/DB_CONNECTION=mysql/DB_CONNECTION=sqlite/g' .env && \
+    sed -i 's/APP_ENV=local/APP_ENV=production/g' .env && \
+    sed -i 's/APP_DEBUG=true/APP_DEBUG=false/g' .env && \
+    sed -i 's#APP_URL=http://localhost#APP_URL=https://ifs24024-pabwe2026-sk-p7-laravel-livewire.onrender.com#g' .env && \
+    echo "FORCE_HTTPS=true" >> .env
 
 # Install Composer dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
@@ -33,12 +37,13 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 # Install npm dependencies & build assets
 RUN npm install --ignore-scripts && npm run build
 
-# Setup application key, storage link, and database
+# Setup application key, storage link, database, and permissions
 RUN php artisan key:generate --force && \
     php artisan storage:link && \
     mkdir -p database && \
     touch database/database.sqlite && \
-    php artisan migrate --force --seed
+    php artisan migrate --force --seed && \
+    chmod -R 777 storage bootstrap/cache database
 
 EXPOSE 10000
 

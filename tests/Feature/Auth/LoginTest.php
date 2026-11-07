@@ -112,6 +112,46 @@ class LoginTest extends TestCase
         $this->assertAuthenticated();
     }
 
+    public function test_can_login_via_post_request(): void
+    {
+        $user = User::factory()->member()->create([
+            'username' => 'directuser',
+            'password' => Hash::make('password123'),
+        ]);
+
+        $this->post('/login', [
+            'username' => 'directuser',
+            'password' => 'password123',
+        ])->assertRedirect(route('stocks.index'));
+
+        $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_admin_can_login_via_post_request(): void
+    {
+        $admin = User::factory()->admin()->create([
+            'username' => 'directadmin',
+            'password' => Hash::make('password123'),
+        ]);
+
+        $this->post('/login', [
+            'username' => 'directadmin',
+            'password' => 'password123',
+        ])->assertRedirect(route('admin.users'));
+
+        $this->assertAuthenticatedAs($admin);
+    }
+
+    public function test_post_login_with_invalid_credentials_fails(): void
+    {
+        $this->post('/login', [
+            'username' => 'nonexistent',
+            'password' => 'wrong',
+        ])->assertSessionHasErrors('login');
+
+        $this->assertGuest();
+    }
+
     public function test_logout(): void
     {
         $user = User::factory()->create();

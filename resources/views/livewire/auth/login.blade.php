@@ -5,22 +5,23 @@
             <p class="text-sm text-slate-500 mt-1">Kelola inventaris stok barang Anda secara teratur dan efisien</p>
         </div>
 
-        <form wire:submit.prevent="authenticate" class="space-y-5">
+        <form wire:submit.prevent="authenticate" action="{{ route('login') }}" method="POST" class="space-y-5">
+            @csrf
             <div>
                 <label for="login-username" class="block text-sm font-medium text-slate-700 mb-1">Username atau Email</label>
-                <input wire:model="login" type="text" id="login-username" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="username atau nama@email.com" required>
+                <input wire:model="login" type="text" name="username" id="login-username" autocomplete="username" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="username atau nama@email.com" required>
                 @error('login') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Password</label>
-                <input wire:model="password" type="password" id="login-password" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="••••••••" required>
+                <input wire:model="password" type="password" name="password" id="login-password" autocomplete="current-password" class="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition" placeholder="••••••••" required>
                 @error('password') <span class="text-xs text-rose-600 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <div class="flex items-center justify-between">
                 <label class="flex items-center space-x-2 text-sm text-slate-600 cursor-pointer">
-                    <input wire:model="remember" type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                    <input wire:model="remember" type="checkbox" name="remember" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
                     <span>Ingat Saya</span>
                 </label>
             </div>

@@ -2,6 +2,7 @@
 
 use App\Features\Admin\Livewire\AdminUserStockList;
 use App\Features\Admin\Livewire\UserList;
+use App\Features\Auth\Actions\LoginUserAction;
 use App\Features\Auth\Livewire\Login;
 use App\Features\Auth\Livewire\Register;
 use App\Features\Stock\Livewire\StockDetail;
@@ -24,6 +25,30 @@ Route::middleware(['throttle:1000-per-second'])->group(function () {
     // Guest Authentication Routes
     Route::middleware('guest')->group(function () {
         Route::get('/login', Login::class)->name('login');
+        Route::post('/login', function (Request $request, LoginUserAction $action) {
+            $validated = $request->validate([
+                'login' => ['nullable', 'string'],
+                'username' => ['nullable', 'string'],
+                'email' => ['nullable', 'string'],
+                'password' => ['required', 'string'],
+            ]);
+
+            $identifier = $validated['username'] ?? $validated['login'] ?? $validated['email'] ?? '';
+
+            if ($action->execute($identifier, $validated['password'], $request->boolean('remember'))) {
+                $request->session()->regenerate();
+                $user = Auth::user();
+                if ($user && $user->isAdmin()) {
+                    return redirect()->route('admin.users');
+                }
+                return redirect()->route('stocks.index');
+            }
+
+            return back()->withInput()->withErrors([
+                'login' => 'Username/email atau password yang Anda masukkan tidak sesuai.',
+            ]);
+        })->name('login.post');
+
         Route::get('/register', Register::class)->name('register');
     });
 
