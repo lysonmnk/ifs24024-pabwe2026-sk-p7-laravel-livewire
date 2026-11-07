@@ -117,78 +117,79 @@ Seeder juga membuat beberapa contoh stok untuk akun `member`.
 Struktur berikut wajib diikuti.
 
 ```text
-app/
-├── Features/
-│   ├── Admin/
-│   │   ├── Livewire/
-│   │   │   ├── AdminUserStockList.php
-│   │   │   └── UserList.php
-│   │   └── Services/
-│   │       └── AdminUserService.php
-│   ├── Ai/
-│   │   ├── Contracts/
-│   │   │   └── AiClientInterface.php
-│   │   ├── DTO/
-│   │   │   └── GeneratedStockItem.php
-│   │   └── Services/
-│   │       └── OpenAiStockGeneratorService.php
-│   ├── Auth/
-│   │   ├── Actions/
-│   │   │   ├── LoginUserAction.php
-│   │   │   └── RegisterUserAction.php
-│   │   └── Livewire/
-│   │       ├── Login.php
-│   │       └── Register.php
-│   ├── Profile/
-│   │   ├── Livewire/
-│   │   │   └── Profile.php
-│   │   └── Services/
-│   │       └── ProfileService.php
-│   └── Stock/
-│       ├── Contracts/
-│       │   └── StockRepositoryInterface.php
-│       ├── Enums/
-│       │   └── StockStatus.php
-│       ├── Livewire/
-│       │   ├── StockDetail.php
-│       │   └── StockList.php
-│       ├── Models/
-│       │   └── Stock.php
-│       ├── Policies/
-│       │   └── StockPolicy.php
-│       ├── Repositories/
-│       │   └── StockRepository.php
-│       └── Services/
-│           ├── StockExcelService.php
-│           └── StockService.php
-├── Http/Middleware/
-│   ├── EnsureRole.php
-│   └── EnsureStockOwnership.php
-├── Models/User.php
-└── Providers/AppServiceProvider.php
-
-resources/views/
-├── components/layouts/app.blade.php
-└── livewire/
-    ├── admin/admin-user-stock-list.blade.php
-    ├── admin/user-list.blade.php
-    ├── auth/login.blade.php
-    ├── auth/register.blade.php
-    ├── profile/profile.blade.php
-    ├── stock/stock-detail.blade.php
-    └── stock/stock-list.blade.php
-
-database/
-├── migrations/…_create_stocks_table.php
-├── migrations/…_add_cover_image_path_to_stocks_table.php
-├── factories/StockFactory.php
-└── seeders/DatabaseSeeder.php
-
-bootstrap/app.php          # alias: role, owns.stock
-routes/web.php
-config/openai.php
-Jenkinsfile
-tests/                     # mirror latihan, namespace Stock
+proyek-laravel/
+│
+├── .agents/                                       # 🤖 PENGATUR TIM AGEN
+│   ├── pm.md                                      # Profil PM, PRD standards, Git conventional commits
+│   ├── data-master.md                             # Profil Data Master, Contract-First rules, DTO & ERD
+│   ├── backend.md                                 # Profil Backend, Services/Actions, debugging protocol
+│   ├── frontend.md                                # Profil Frontend, Livewire, Blade, Design System
+│   ├── sqa.md                                     # Profil SQA, automated Pest/PHPUnit tests, TDD
+│   └── qt.md                                      # Profil QT, edge cases, functional QA reports
+│
+├── docs/                                          # 📋 DOKUMEN CETAK BIRU PROYEK
+│   ├── PRD.md                                     # Product Requirements Document (Visi, Fitur, Metrik)
+│   ├── ARCHITECTURE.md                            # Peta Arsitektur Laravel Feature-Driven & Tech Stack
+│   ├── DESIGN_SYSTEM.md                           # Palet Tailwind, Spacing 8px, Komponen Blade
+│   └── QA_REPORT.md                               # Catatan verifikasi & status pengujian fungsional
+│
+├── contracts/                                     # 📜 KONTRAK DATA (CONTRACT FIRST)
+│   ├── stock-contract.md                          # Kontrak format data fitur Stock
+│   └── ai-generator-contract.md                   # Kontrak format DTO & respons OpenAI
+│
+├── app/
+│   ├── Features/                                  # 🧩 MODUL FITUR APLIKASI
+│   │   ├── Admin/                                 # Fitur Manajemen Pengguna & Stok Admin
+│   │   │   ├── Livewire/                          # [Frontend] AdminUserStockList.php, UserList.php
+│   │   │   └── Services/                          # [Backend] AdminUserService.php
+│   │   │
+│   │   ├── Ai/                                    # Fitur Integrasi OpenAI Stock Generator
+│   │   │   ├── Contracts/                         # [Backend/Data] AiClientInterface.php
+│   │   │   ├── DTO/                               # [Data Master] GeneratedStockItem.php
+│   │   │   └── Services/                          # [Backend] OpenAiStockGeneratorService.php
+│   │   │
+│   │   ├── Auth/                                  # Fitur Autentikasi Pengguna
+│   │   │   ├── Actions/                           # [Backend] LoginUserAction.php, RegisterUserAction.php
+│   │   │   └── Livewire/                          # [Frontend] Login.php, Register.php
+│   │   │
+│   │   ├── Profile/                               # Fitur Pengaturan Profil Akun
+│   │   │   ├── Livewire/                          # [Frontend] Profile.php
+│   │   │   └── Services/                          # [Backend] ProfileService.php
+│   │   │
+│   │   └── Stock/                                 # Fitur Inti Manajemen Stok
+│   │       ├── Contracts/                         # [Backend] StockRepositoryInterface.php
+│   │       ├── Enums/                             # [Data Master] StockStatus.php
+│   │       ├── Livewire/                          # [Frontend] StockDetail.php, StockList.php
+│   │       ├── Models/                            # [Data Master] Stock.php
+│   │       ├── Policies/                          # [Backend] StockPolicy.php
+│   │       ├── Repositories/                      # [Backend] StockRepository.php
+│   │       └── Services/                          # [Backend] StockExcelService.php, StockService.php
+│   │
+│   ├── Http/Middleware/                           # [Backend] EnsureRole.php, EnsureStockOwnership.php
+│   ├── Models/                                    # [Data Master] User.php
+│   └── Providers/                                 # [Backend] AppServiceProvider.php
+│
+├── resources/views/                               # 🎨 TAMPILAN BLADE & TAILWIND (FRONTEND)
+│   ├── components/layouts/app.blade.php           # Master layout aplikasi
+│   └── livewire/                                  # Komponen UI interaktif Livewire
+│       ├── admin/
+│       ├── auth/
+│       ├── profile/
+│       └── stock/
+│
+├── database/                                      # 🗄️ DATABASE & SEEDER (DATA MASTER)
+│   ├── migrations/                                # File migrasi tabel stocks & users
+│   ├── factories/                                 # StockFactory.php
+│   └── seeders/                                   # DatabaseSeeder.php
+│
+├── routes/web.php                                 # [Backend] Definisi route web
+├── bootstrap/app.php                              # [Backend] Konfigurasi middleware & exception
+├── config/openai.php                              # [Backend] Konfigurasi API key OpenAI
+├── Jenkinsfile                                    # [SQA] Otomatisasi CI/CD Pipeline
+├── tests/                                         # 🧪 PENGUJIAN OTOMATIS (SQA)
+│   ├── Feature/Stock/                             # Pengujian integrasi alur fitur Stock
+│   └── Unit/Stock/                                # Pengujian unit method service & DTO
+└── README.md                                      # Panduan cepat proyek
 ```
 
 ## 7. Rute
