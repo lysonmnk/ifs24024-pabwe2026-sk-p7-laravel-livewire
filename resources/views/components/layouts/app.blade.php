@@ -7,7 +7,7 @@
     <title>{{ $title ?? 'Stock Inventory Application' }} - PABWE 2026</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.tailwindcss.com" defer></script>
+    <!-- Tailwind CSS loaded via Vite -->
     <style>
         [x-cloak] { display: none !important; }
         html:has(.modal-scroll-lock),

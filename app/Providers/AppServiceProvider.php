@@ -35,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        \Livewire\Livewire::useScriptTagAttributes(['defer' => true]);
+
         Gate::policy(Stock::class, StockPolicy::class);
 
         RateLimiter::for('1000-per-second', function (Request $request) {
