@@ -119,7 +119,7 @@ Struktur berikut wajib diikuti.
 ```text
 proyek-laravel/
 │
-├── .agents/                                       # 🤖 PENGATUR TIM AGEN
+├── .agents/                                       # PENGATUR TIM AGEN
 │   ├── pm.md                                      # Profil PM, PRD standards, Git conventional commits
 │   ├── data-master.md                             # Profil Data Master, Contract-First rules, DTO & ERD
 │   ├── backend.md                                 # Profil Backend, Services/Actions, debugging protocol
@@ -127,18 +127,18 @@ proyek-laravel/
 │   ├── sqa.md                                     # Profil SQA, automated Pest/PHPUnit tests, TDD
 │   └── qt.md                                      # Profil QT, edge cases, functional QA reports
 │
-├── docs/                                          # 📋 DOKUMEN CETAK BIRU PROYEK
+├── docs/                                          # DOKUMEN CETAK BIRU PROYEK
 │   ├── PRD.md                                     # Product Requirements Document (Visi, Fitur, Metrik)
 │   ├── ARCHITECTURE.md                            # Peta Arsitektur Laravel Feature-Driven & Tech Stack
 │   ├── DESIGN_SYSTEM.md                           # Palet Tailwind, Spacing 8px, Komponen Blade
 │   └── QA_REPORT.md                               # Catatan verifikasi & status pengujian fungsional
 │
-├── contracts/                                     # 📜 KONTRAK DATA (CONTRACT FIRST)
+├── contracts/                                     # KONTRAK DATA (CONTRACT FIRST)
 │   ├── stock-contract.md                          # Kontrak format data fitur Stock
 │   └── ai-generator-contract.md                   # Kontrak format DTO & respons OpenAI
 │
 ├── app/
-│   ├── Features/                                  # 🧩 MODUL FITUR APLIKASI
+│   ├── Features/                                  # MODUL FITUR APLIKASI
 │   │   ├── Admin/                                 # Fitur Manajemen Pengguna & Stok Admin
 │   │   │   ├── Livewire/                          # [Frontend] AdminUserStockList.php, UserList.php
 │   │   │   └── Services/                          # [Backend] AdminUserService.php
@@ -169,7 +169,7 @@ proyek-laravel/
 │   ├── Models/                                    # [Data Master] User.php
 │   └── Providers/                                 # [Backend] AppServiceProvider.php
 │
-├── resources/views/                               # 🎨 TAMPILAN BLADE & TAILWIND (FRONTEND)
+├── resources/views/                               # TAMPILAN BLADE & TAILWIND (FRONTEND)
 │   ├── components/layouts/app.blade.php           # Master layout aplikasi
 │   └── livewire/                                  # Komponen UI interaktif Livewire
 │       ├── admin/
@@ -177,7 +177,7 @@ proyek-laravel/
 │       ├── profile/
 │       └── stock/
 │
-├── database/                                      # 🗄️ DATABASE & SEEDER (DATA MASTER)
+├── database/                                      # DATABASE & SEEDER (DATA MASTER)
 │   ├── migrations/                                # File migrasi tabel stocks & users
 │   ├── factories/                                 # StockFactory.php
 │   └── seeders/                                   # DatabaseSeeder.php
@@ -186,7 +186,7 @@ proyek-laravel/
 ├── bootstrap/app.php                              # [Backend] Konfigurasi middleware & exception
 ├── config/openai.php                              # [Backend] Konfigurasi API key OpenAI
 ├── Jenkinsfile                                    # [SQA] Otomatisasi CI/CD Pipeline
-├── tests/                                         # 🧪 PENGUJIAN OTOMATIS (SQA)
+├── tests/                                         # PENGUJIAN OTOMATIS (SQA)
 │   ├── Feature/Stock/                             # Pengujian integrasi alur fitur Stock
 │   └── Unit/Stock/                                # Pengujian unit method service & DTO
 └── README.md                                      # Panduan cepat proyek
