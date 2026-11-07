@@ -34,7 +34,7 @@
              x-cloak></div>
 
         <!-- Sidebar (Left Fixed) -->
-        <aside role="navigation" aria-label="Menu Navigasi Utama" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+        <aside aria-label="Sidebar Menu" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
                class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 shadow-sm">
             
             <!-- Brand / Logo -->
@@ -76,7 +76,7 @@
             </div>
 
             <!-- Navigation Links -->
-            <div class="flex-1 px-3 space-y-1 overflow-y-auto">
+            <nav aria-label="Menu Navigasi Utama" class="flex-1 px-3 space-y-1 overflow-y-auto">
                 <div class="px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-600">
                     Menu Utama
                 </div>
@@ -106,7 +106,7 @@
                     </svg>
                     <span>Profil Saya</span>
                 </a>
-            </div>
+            </nav>
 
             <!-- Logout Button -->
             <div class="p-3 border-t border-slate-100">
