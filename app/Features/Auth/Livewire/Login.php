@@ -32,13 +32,13 @@ class Login extends Component
     {
         $this->validate();
 
-        if ($action->execute($this->login, $this->password, $this->remember)) {
+        if ($action->execute(trim($this->login), $this->password, $this->remember)) {
             $user = Auth::user();
             if ($user && $user->isAdmin()) {
-                return $this->redirectRoute('admin.users', navigate: true);
+                return $this->redirectRoute('admin.users');
             }
 
-            return $this->redirectRoute('stocks.index', navigate: true);
+            return $this->redirectRoute('stocks.index');
         }
 
         $this->addError('login', 'Username/email atau password yang Anda masukkan tidak sesuai.');
