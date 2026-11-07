@@ -1,7 +1,7 @@
 <div>
     <!-- Toast UI Editor CDN Styles & Scripts -->
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
 
     <!-- Top Action Bar -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
@@ -13,7 +13,7 @@
         <div class="relative" x-data="{ open: false, loading: null }" @click.outside="open = false" @keydown.escape.window="open = false">
             <button type="button" @click="open = !open" :disabled="!!loading"
                 class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 shadow-sm transition disabled:opacity-60"
-                title="Menu aksi">
+                title="Menu aksi" aria-label="Menu aksi cepat">
                 <svg x-show="!loading" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                 </svg>
@@ -143,9 +143,9 @@
                             </td>
                             <td class="py-4 px-4">
                                 <div class="inline-flex items-center space-x-1.5 bg-slate-50 border border-slate-200 rounded-lg p-1">
-                                    <button wire:click="adjustQuantity({{ $item->id }}, -1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Kurangi 1">−</button>
+                                    <button wire:click="adjustQuantity({{ $item->id }}, -1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Kurangi 1" aria-label="Kurangi kuantitas {{ $item->name }}">−</button>
                                     <span class="px-2 font-bold text-slate-800">{{ $item->quantity }} <span class="text-xs font-normal text-slate-500">{{ $item->unit }}</span></span>
-                                    <button wire:click="adjustQuantity({{ $item->id }}, 1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Tambah 1">+</button>
+                                    <button wire:click="adjustQuantity({{ $item->id }}, 1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Tambah 1" aria-label="Tambah kuantitas {{ $item->name }}">+</button>
                                 </div>
                             </td>
                             <td class="py-4 px-4 font-mono text-slate-700">
@@ -160,13 +160,13 @@
                                 </span>
                             </td>
                             <td class="py-4 px-4 text-right sm:pr-6 space-x-2">
-                                <a href="{{ route('stocks.show', $item) }}" class="p-1.5 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-slate-100 inline-block" title="Lihat Detail">
+                                <a href="{{ route('stocks.show', $item) }}" class="p-1.5 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-slate-100 inline-block" title="Lihat Detail" aria-label="Lihat detail {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 </a>
-                                <button wire:click="openEditModal({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-amber-600 rounded-lg hover:bg-slate-100 inline-block" title="Edit">
+                                <button wire:click="openEditModal({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-amber-600 rounded-lg hover:bg-slate-100 inline-block" title="Edit" aria-label="Edit stok {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 </button>
-                                <button wire:click="confirmDelete({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-slate-100 inline-block" title="Hapus">
+                                <button wire:click="confirmDelete({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-slate-100 inline-block" title="Hapus" aria-label="Hapus stok {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 </button>
                             </td>

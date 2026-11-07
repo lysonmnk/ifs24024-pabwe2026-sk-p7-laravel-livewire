@@ -2,7 +2,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
             <div class="flex items-center space-x-2">
-                <a href="{{ route('admin.users') }}" class="p-1 rounded-lg text-slate-500 hover:bg-slate-200 transition">
+                <a href="{{ route('admin.users') }}" aria-label="Kembali ke daftar pengguna" class="p-1 rounded-lg text-slate-500 hover:bg-slate-200 transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
                 </a>
                 <h1 class="text-2xl font-bold text-slate-900">Stok Pengguna: {{ $user->name }}</h1>

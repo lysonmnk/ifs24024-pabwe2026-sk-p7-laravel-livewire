@@ -19,6 +19,7 @@
     @livewireStyles
 </head>
 <body class="h-full font-sans text-slate-800 antialiased" x-data="{ sidebarOpen: false }">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-lg">Lewati ke konten utama</a>
     @auth
         <!-- Mobile Sidebar Backdrop -->
         <div x-show="sidebarOpen" 
@@ -33,7 +34,7 @@
              x-cloak></div>
 
         <!-- Sidebar (Left Fixed) -->
-        <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+        <aside role="navigation" aria-label="Menu Navigasi Utama" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
                class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 ease-in-out md:translate-x-0 shadow-sm">
             
             <!-- Brand / Logo -->
@@ -46,7 +47,7 @@
                     </span>
                     <span class="text-slate-900 tracking-tight">Stock<span class="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent font-extrabold">App</span></span>
                 </a>
-                <button @click="sidebarOpen = false" class="md:hidden text-slate-500 hover:text-slate-700">
+                <button @click="sidebarOpen = false" aria-label="Tutup menu navigasi" class="md:hidden text-slate-500 hover:text-slate-700">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -124,9 +125,9 @@
         <!-- Main Content Area -->
         <div class="md:pl-64 flex flex-col flex-1 min-h-screen">
             <!-- Header Bar -->
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
+            <header role="banner" class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 sticky top-0 z-30">
                 <div class="flex items-center space-x-3">
-                    <button @click="sidebarOpen = true" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                    <button @click="sidebarOpen = true" aria-label="Buka menu navigasi" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
                     <span class="text-base sm:text-lg font-bold text-slate-900 tracking-tight">{{ $title ?? 'Dashboard' }}</span>
@@ -138,7 +139,7 @@
             </header>
 
             <!-- Page Slot Content -->
-            <main class="flex-1 p-4 sm:p-6 lg:p-8">
+            <main id="main-content" role="main" class="flex-1 p-4 sm:p-6 lg:p-8">
                 <!-- Session Flash Messages -->
                 @if (session()->has('success'))
                     <div class="mb-6 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 flex items-center justify-between shadow-sm">
@@ -167,7 +168,7 @@
         </div>
     @else
         <!-- Guest View Layout -->
-        <main class="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+        <main id="main-content" role="main" class="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
             {{ $slot }}
         </main>
     @endauth

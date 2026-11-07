@@ -1,12 +1,12 @@
 <div>
     <!-- Toast UI Editor CDN Styles & Scripts -->
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+
+
 
     <!-- Top Navigation Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div class="flex items-center space-x-3">
-            <a href="{{ route('stocks.index') }}" class="p-2 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-200 transition" title="Kembali ke Daftar Stok">
+            <a href="{{ route('stocks.index') }}" aria-label="Kembali ke Daftar Stok" class="p-2 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-200 transition" title="Kembali ke Daftar Stok">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
