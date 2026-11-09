@@ -168,7 +168,7 @@
         </div>
     @else
         <!-- Guest View Layout -->
-        <main id="main-content" role="main" class="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50">
+        <main id="main-content" role="main" class="min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
             {{ $slot }}
         </main>
     @endauth
