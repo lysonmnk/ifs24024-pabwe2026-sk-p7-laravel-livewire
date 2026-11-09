@@ -52,11 +52,11 @@
             <div class="relative group h-64 sm:h-80 w-full bg-slate-900 overflow-hidden">
                 <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($stock->cover_image_path) }}?v={{ time() }}" alt="Cover Stok" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center space-x-3">
-                    <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="px-4 py-2 bg-white text-slate-800 text-xs font-semibold rounded-xl shadow-lg hover:bg-slate-50 transition flex items-center space-x-1.5">
+                    <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="btn-interactive active:scale-95 px-4 py-2 bg-white text-slate-800 text-xs font-semibold rounded-xl shadow-lg hover:bg-slate-50 transition flex items-center space-x-1.5">
                         <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         <span>Ganti Cover</span>
                     </button>
-                    <button type="button" wire:click="confirmDeleteCover" class="px-4 py-2 bg-rose-700 text-white text-xs font-semibold rounded-xl shadow-lg hover:bg-rose-800 transition flex items-center space-x-1.5">
+                    <button type="button" wire:click="confirmDeleteCover" class="btn-interactive active:scale-95 px-4 py-2 bg-rose-700 text-white text-xs font-semibold rounded-xl shadow-lg hover:bg-rose-800 transition flex items-center space-x-1.5">
                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         <span>Hapus Cover</span>
                     </button>
@@ -71,7 +71,7 @@
                 </div>
                 <h2 class="text-sm font-bold text-slate-800">Tambahkan Cover Gambar untuk Stok Ini</h2>
                 <p class="text-xs text-slate-600 mt-1 max-w-sm">Unggah gambar produk untuk mempermudah identifikasi barang di gudang.</p>
-                <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="mt-4 px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-sm hover:bg-blue-700 transition flex items-center space-x-1.5">
+                <button type="button" onclick="document.getElementById('coverPhotoInput').click()" class="btn-interactive active:scale-95 mt-4 px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-xl shadow-sm hover:bg-blue-700 transition flex items-center space-x-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     <span>Unggah Gambar</span>
                 </button>
@@ -79,10 +79,10 @@
         @endif
     </div>
 
-    <!-- Stock Metrics & Details Grid -->
+    <!-- Stock Metrics & Details Grid with Card Hover Micro-interaction -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <!-- Quantity Adjuster Card -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="card-interactive bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-200">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-2">Jumlah Stok Saat Ini</span>
             <div class="flex items-center justify-between">
                 <div>
@@ -90,8 +90,8 @@
                     <span class="text-sm text-slate-600 ml-1">{{ $stock->unit }}</span>
                 </div>
                 <div class="inline-flex items-center space-x-2 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
-                    <button wire:click="adjustQuantity(-1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-800 font-bold shadow-xs transition" title="Kurang 1">−</button>
-                    <button wire:click="adjustQuantity(1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-800 font-bold shadow-xs transition" title="Tambah 1">+</button>
+                    <button wire:click="adjustQuantity(-1)" class="btn-interactive active:scale-90 w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-800 font-bold shadow-xs transition" title="Kurang 1">−</button>
+                    <button wire:click="adjustQuantity(1)" class="btn-interactive active:scale-90 w-8 h-8 flex items-center justify-center rounded-lg bg-white hover:bg-slate-200 text-slate-800 font-bold shadow-xs transition" title="Tambah 1">+</button>
                 </div>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
@@ -101,7 +101,7 @@
         </div>
 
         <!-- Price Card -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="card-interactive bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-200">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-2">Harga Satuan</span>
             <div class="text-2xl font-bold font-mono text-slate-900">
                 {{ $stock->price !== null ? 'Rp ' . number_format($stock->price, 0, ',', '.') : '-' }}
@@ -115,7 +115,7 @@
         </div>
 
         <!-- Status Card -->
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="card-interactive bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-200">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-2">Kondisi Ketersediaan</span>
             <div class="mt-1">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border {{ $stEnum?->badgeClass() ?? 'bg-slate-100 text-slate-800' }}">
@@ -204,8 +204,8 @@
                     </div>
 
                     <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-100">
-                        <button type="button" wire:click="closeEditModal" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm">Simpan Perubahan</button>
+                        <button type="button" wire:click="closeEditModal" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
+                        <button type="submit" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
@@ -219,8 +219,8 @@
                 <h2 class="text-lg font-bold text-slate-900 mb-2">Hapus Stok Ini?</h2>
                 <p class="text-sm text-slate-600 mb-6">Tindakan ini permanen. Semua data stok dan file cover akan dihapus dari server.</p>
                 <div class="flex items-center justify-end space-x-3">
-                    <button type="button" wire:click="cancelDeleteStock" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Batal</button>
-                    <button type="button" wire:click="deleteStock" class="px-4 py-2 text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 rounded-lg shadow-sm">Hapus Permanen</button>
+                    <button type="button" wire:click="cancelDeleteStock" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
+                    <button type="button" wire:click="deleteStock" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 rounded-lg shadow-sm transition">Hapus Permanen</button>
                 </div>
             </div>
         </div>
