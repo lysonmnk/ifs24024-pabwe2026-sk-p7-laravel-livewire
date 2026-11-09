@@ -6,7 +6,7 @@
     <!-- Top Navigation Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div class="flex items-center space-x-3">
-            <a href="{{ route('stocks.index') }}" aria-label="Kembali ke Daftar Stok" class="p-2 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-200 transition" title="Kembali ke Daftar Stok">
+            <a href="{{ route('stocks.index') }}" aria-label="Kembali ke Daftar Stok" class="btn-interactive active:scale-90 p-2 rounded-xl text-slate-600 hover:text-slate-800 hover:bg-slate-200 transition" title="Kembali ke Daftar Stok">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
@@ -27,7 +27,7 @@
 
         <div class="flex flex-wrap items-center gap-2">
             <!-- Edit Button -->
-            <button wire:click="openEditModal" wire:loading.attr="disabled" class="inline-flex items-center space-x-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-75 text-white text-xs font-semibold rounded-lg shadow-sm transition">
+            <button wire:click="openEditModal" wire:loading.attr="disabled" class="btn-interactive active:scale-95 inline-flex items-center space-x-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-75 text-white text-xs font-semibold rounded-lg shadow-sm transition">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
@@ -35,7 +35,7 @@
             </button>
 
             <!-- Delete Button -->
-            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
+            <button wire:click="confirmDeleteStock" wire:loading.attr="disabled" class="btn-interactive active:scale-95 inline-flex items-center space-x-1 px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold rounded-lg transition disabled:opacity-75">
                 <svg class="w-4 h-4 text-rose-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
