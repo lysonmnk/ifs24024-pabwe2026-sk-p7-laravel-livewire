@@ -54,13 +54,31 @@ const toTile = item => {
 
 const EMPTY = { kind: 'empty' };
 
-const Tile = ({ tile }) => (
-  <div className="grid-motion__tile">
-    {tile.kind === 'image' && <img src={tile.src} alt={tile.alt} draggable={false} decoding="async" />}
-    {tile.kind === 'text' && <span className="grid-motion__text">{tile.text}</span>}
-    {tile.kind === 'node' && tile.node}
-  </div>
-);
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=640&q=80&auto=format&fit=crop';
+
+const Tile = ({ tile }) => {
+  const [imgSrc, setImgSrc] = useState(tile.src);
+
+  return (
+    <div className="grid-motion__tile">
+      {tile.kind === 'image' && (
+        <img
+          src={imgSrc || tile.src}
+          alt={tile.alt || 'Inventory stock visual'}
+          draggable={false}
+          decoding="async"
+          onError={() => {
+            if (imgSrc !== FALLBACK_IMAGE) {
+              setImgSrc(FALLBACK_IMAGE);
+            }
+          }}
+        />
+      )}
+      {tile.kind === 'text' && <span className="grid-motion__text">{tile.text}</span>}
+      {tile.kind === 'node' && tile.node}
+    </div>
+  );
+};
 
 const GridMotion = ({
   items = [],
