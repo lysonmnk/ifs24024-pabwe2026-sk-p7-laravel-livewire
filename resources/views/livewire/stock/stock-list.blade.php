@@ -12,7 +12,7 @@
 
         <div class="relative" x-data="{ open: false, loading: null }" @click.outside="open = false" @keydown.escape.window="open = false">
             <button type="button" @click="open = !open" :disabled="!!loading"
-                class="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 shadow-sm transition disabled:opacity-60"
+                class="btn-interactive active:scale-95 inline-flex items-center justify-center w-10 h-10 rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 shadow-sm transition disabled:opacity-60"
                 title="Menu aksi" aria-label="Menu aksi cepat">
                 <svg x-show="!loading" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
@@ -143,9 +143,9 @@
                             </td>
                             <td class="py-4 px-4">
                                 <div class="inline-flex items-center space-x-1.5 bg-slate-50 border border-slate-200 rounded-lg p-1">
-                                    <button wire:click="adjustQuantity({{ $item->id }}, -1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Kurangi 1" aria-label="Kurangi kuantitas {{ $item->name }}">−</button>
+                                    <button wire:click="adjustQuantity({{ $item->id }}, -1)" class="btn-interactive active:scale-90 w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Kurangi 1" aria-label="Kurangi kuantitas {{ $item->name }}">−</button>
                                     <span class="px-2 font-bold text-slate-800">{{ $item->quantity }} <span class="text-xs font-normal text-slate-500">{{ $item->unit }}</span></span>
-                                    <button wire:click="adjustQuantity({{ $item->id }}, 1)" class="w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Tambah 1" aria-label="Tambah kuantitas {{ $item->name }}">+</button>
+                                    <button wire:click="adjustQuantity({{ $item->id }}, 1)" class="btn-interactive active:scale-90 w-6 h-6 flex items-center justify-center rounded bg-white hover:bg-slate-200 text-slate-700 font-bold shadow-xs transition" title="Tambah 1" aria-label="Tambah kuantitas {{ $item->name }}">+</button>
                                 </div>
                             </td>
                             <td class="py-4 px-4 font-mono text-slate-700">
@@ -160,13 +160,13 @@
                                 </span>
                             </td>
                             <td class="py-4 px-4 text-right sm:pr-6 space-x-2">
-                                <a href="{{ route('stocks.show', $item) }}" class="p-1.5 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-slate-100 inline-block" title="Lihat Detail" aria-label="Lihat detail {{ $item->name }}">
+                                <a href="{{ route('stocks.show', $item) }}" class="btn-interactive active:scale-90 hover:scale-110 p-1.5 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-slate-100 inline-block transition" title="Lihat Detail" aria-label="Lihat detail {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                                 </a>
-                                <button wire:click="openEditModal({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-amber-600 rounded-lg hover:bg-slate-100 inline-block" title="Edit" aria-label="Edit stok {{ $item->name }}">
+                                <button wire:click="openEditModal({{ $item->id }})" class="btn-interactive active:scale-90 hover:scale-110 p-1.5 text-slate-500 hover:text-amber-600 rounded-lg hover:bg-slate-100 inline-block transition" title="Edit" aria-label="Edit stok {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                 </button>
-                                <button wire:click="confirmDelete({{ $item->id }})" class="p-1.5 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-slate-100 inline-block" title="Hapus" aria-label="Hapus stok {{ $item->name }}">
+                                <button wire:click="confirmDelete({{ $item->id }})" class="btn-interactive active:scale-90 hover:scale-110 p-1.5 text-slate-500 hover:text-rose-600 rounded-lg hover:bg-slate-100 inline-block transition" title="Hapus" aria-label="Hapus stok {{ $item->name }}">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                 </button>
                             </td>
@@ -259,8 +259,8 @@
                     </div>
 
                     <div class="flex items-center justify-end space-x-3 pt-4 border-t border-slate-100">
-                        <button type="button" wire:click="closeFormModal" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition">Simpan Stok</button>
+                        <button type="button" wire:click="closeFormModal" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
+                        <button type="submit" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition">Simpan Stok</button>
                     </div>
                 </form>
             </div>
@@ -274,8 +274,8 @@
                 <h2 class="text-lg font-bold text-slate-900 mb-2">Hapus Stok Barang?</h2>
                 <p class="text-sm text-slate-500 mb-6">Tindakan ini tidak dapat dibatalkan. Data stok dan cover gambarnya akan dihapus permanen.</p>
                 <div class="flex items-center justify-end space-x-3">
-                    <button type="button" wire:click="cancelDelete" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
-                    <button type="button" wire:click="deleteStock" class="px-4 py-2 text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 rounded-lg shadow-sm transition">Hapus Permanen</button>
+                    <button type="button" wire:click="cancelDelete" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
+                    <button type="button" wire:click="deleteStock" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-rose-700 hover:bg-rose-800 rounded-lg shadow-sm transition">Hapus Permanen</button>
                 </div>
             </div>
         </div>
@@ -291,8 +291,8 @@
                     <input type="file" id="importFile" aria-label="Pilih file spreadsheet untuk import" wire:model="importFile" accept=".xlsx,.xls,.csv" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     @error('importFile') <span class="text-xs text-rose-600 block">{{ $message }}</span> @enderror
                     <div class="flex items-center justify-end space-x-3 pt-3">
-                        <button type="button" wire:click="closeImportModal" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Batal</button>
-                        <button type="submit" class="px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm">Mulai Import</button>
+                        <button type="button" wire:click="closeImportModal" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Batal</button>
+                        <button type="submit" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition">Mulai Import</button>
                     </div>
                 </form>
             </div>
@@ -327,9 +327,10 @@
                             <label for="aiCount" class="text-xs font-semibold text-slate-700">Jumlah Item:</label>
                             <input id="aiCount" wire:model="aiCount" type="number" min="1" max="10" class="w-16 px-2 py-1 text-sm rounded border border-slate-300 text-center">
                         </div>
-                        <button type="button" wire:click="generateWithAi" wire:loading.attr="disabled" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-lg shadow-sm transition disabled:opacity-60 flex items-center space-x-1.5">
+                        <button type="button" wire:click="generateWithAi" wire:loading.attr="disabled" class="btn-interactive active:scale-95 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-lg shadow-sm transition disabled:opacity-60 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             <span wire:loading.remove wire:target="generateWithAi">Generate Item</span>
-                            <span wire:loading wire:target="generateWithAi">Memproses AI...</span>
+                            <span wire:loading wire:target="generateWithAi">Merancang Item...</span>
                         </button>
                     </div>
 
@@ -339,32 +340,88 @@
                         </div>
                     @endif
 
-                    @if (!empty($aiGeneratedItems))
-                        <div class="mt-4">
-                            <div class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Pratinjau Hasil AI (Centang untuk simpan):</div>
-                            <div class="max-h-60 overflow-y-auto border border-slate-200 rounded-xl divide-y divide-slate-100">
-                                @foreach ($aiGeneratedItems as $idx => $gItem)
-                                    <label class="p-3 flex items-start space-x-3 hover:bg-slate-50 cursor-pointer">
-                                        <input type="checkbox" wire:model="aiSelectedIndices" value="{{ $idx }}" class="mt-1 rounded text-purple-600 border-slate-300">
-                                        <div class="flex-1">
-                                            <div class="flex items-center justify-between">
-                                                <span class="font-semibold text-sm text-slate-800">{{ $gItem['name'] }}</span>
-                                                <span class="text-xs font-mono text-slate-500">{{ $gItem['sku'] ?? 'Auto SKU' }}</span>
-                                            </div>
-                                            <p class="text-xs text-slate-500 mt-0.5">{{ $gItem['quantity'] }} {{ $gItem['unit'] }} &bull; Rp {{ number_format($gItem['price'] ?? 0, 0, ',', '.') }}</p>
-                                        </div>
-                                    </label>
-                                @endforeach
+                    <!-- Skeleton Shimmer Placeholder during AI Generation -->
+                    <div wire:loading.block wire:target="generateWithAi" class="mt-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-2">
+                                <span class="relative flex h-2.5 w-2.5">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-purple-600"></span>
+                                </span>
+                                <span class="text-xs font-semibold text-purple-900">AI sedang menganalisis & merancang spesifikasi inventaris...</span>
                             </div>
+                            <span class="text-[11px] font-medium text-slate-500">Estimasi ~2-4 detik</span>
                         </div>
-                    @endif
+                        <div class="space-y-3">
+                            @for ($i = 0; $i < max(3, (int)($aiCount ?: 3)); $i++)
+                                <div class="shimmer-card rounded-xl border border-slate-200 p-3.5">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-4 h-4 rounded bg-slate-200 mt-0.5 shrink-0"></div>
+                                        <div class="flex-1 space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <div class="h-4 bg-slate-200 rounded w-2/5"></div>
+                                                <div class="h-3 bg-slate-200 rounded w-20"></div>
+                                            </div>
+                                            <div class="h-3 bg-slate-200 rounded w-4/5"></div>
+                                            <div class="flex items-center space-x-3 pt-1">
+                                                <div class="h-4 bg-slate-200 rounded w-16"></div>
+                                                <div class="h-4 bg-slate-200 rounded w-24"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endfor
+                        </div>
+                    </div>
+
+                    <!-- AI Generated Items Preview Cards with Card Hover Micro-interaction -->
+                    <div wire:loading.remove wire:target="generateWithAi">
+                        @if (!empty($aiGeneratedItems))
+                            <div class="mt-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="text-xs font-bold uppercase tracking-wider text-slate-700">Hasil Rekomendasi AI (Centang untuk simpan):</div>
+                                    <span class="text-xs font-semibold text-purple-800 bg-purple-50 px-2.5 py-0.5 rounded-full border border-purple-200">
+                                        {{ count($aiGeneratedItems) }} item disarankan
+                                    </span>
+                                </div>
+                                <div class="max-h-64 overflow-y-auto space-y-2.5 p-0.5">
+                                    @foreach ($aiGeneratedItems as $idx => $gItem)
+                                        <label class="card-interactive block p-3.5 bg-white border border-slate-200 rounded-xl hover:border-purple-300 hover:bg-purple-50/20 cursor-pointer shadow-xs">
+                                            <div class="flex items-start space-x-3">
+                                                <input type="checkbox" wire:model="aiSelectedIndices" value="{{ $idx }}" class="mt-1 w-4 h-4 rounded text-purple-600 border-slate-300 focus:ring-purple-500">
+                                                <div class="flex-1">
+                                                    <div class="flex items-center justify-between">
+                                                        <span class="font-bold text-sm text-slate-900">{{ $gItem['name'] }}</span>
+                                                        <span class="text-xs font-mono font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">{{ $gItem['sku'] ?? 'AUTO-SKU' }}</span>
+                                                    </div>
+                                                    @if (!empty($gItem['description']))
+                                                        <p class="text-xs text-slate-600 mt-1 line-clamp-1">{{ $gItem['description'] }}</p>
+                                                    @endif
+                                                    <div class="flex items-center gap-2 mt-2">
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                                            {{ $gItem['quantity'] }} {{ $gItem['unit'] ?? 'unit' }}
+                                                        </span>
+                                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-blue-50 text-blue-800 border border-blue-200 font-mono">
+                                                            Rp {{ number_format($gItem['price'] ?? 0, 0, ',', '.') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="flex items-center justify-end space-x-3 pt-3 border-t border-slate-100">
-                    <button type="button" wire:click="closeAiModal" class="px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg">Tutup</button>
-                    @if (!empty($aiGeneratedItems))
-                        <button type="button" wire:click="saveAiGenerated" class="px-4 py-2 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-sm">Simpan Pilihan ke Stok</button>
-                    @endif
+                    <button type="button" wire:click="closeAiModal" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-slate-600 hover:bg-slate-100 rounded-lg transition">Tutup</button>
+                    <div wire:loading.remove wire:target="generateWithAi">
+                        @if (!empty($aiGeneratedItems))
+                            <button type="button" wire:click="saveAiGenerated" class="btn-interactive active:scale-95 px-4 py-2 text-sm font-semibold text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow-sm transition">Simpan Pilihan ke Stok</button>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
