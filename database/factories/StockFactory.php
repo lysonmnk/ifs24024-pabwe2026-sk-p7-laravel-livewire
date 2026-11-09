@@ -31,6 +31,10 @@ class StockFactory extends Factory
             'price' => fake()->randomFloat(2, 5000, 100000),
             'min_stock' => 5,
             'status' => StockStatus::AVAILABLE,
+            'category' => fake()->randomElement(['Sembako', 'Minuman', 'Bumbu', 'Alat Tulis', 'Snack']),
+            'supplier' => fake()->randomElement(['PB Sri Makmur', 'Grosir Jaya', 'Sumber Pangan', 'Sentosa Abadi']),
+            'rack_location' => 'Rak ' . fake()->randomElement(['A-01', 'A-02', 'B-01', 'B-04', 'C-10']),
+            'order_stage' => 'ready',
         ];
     }
 

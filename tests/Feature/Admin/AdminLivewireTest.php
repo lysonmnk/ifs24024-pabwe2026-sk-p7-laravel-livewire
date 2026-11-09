@@ -79,4 +79,26 @@ class AdminLivewireTest extends TestCase
             ->call('exportExcel')
             ->assertFileDownloaded();
     }
+
+    public function test_admin_can_filter_users_by_role_and_toggle_view_mode(): void
+    {
+        $admin = User::factory()->admin()->create(['name' => 'Admin Boss']);
+        User::factory()->member()->create(['name' => 'Member Store One']);
+        User::factory()->admin()->create(['name' => 'Co-Admin Two']);
+
+        $this->actingAs($admin);
+
+        Livewire::test(UserList::class)
+            ->assertSee('Member Store One')
+            ->assertSee('Co-Admin Two')
+            ->call('setRole', 'member')
+            ->assertSee('Member Store One')
+            ->assertDontSee('Co-Admin Two')
+            ->call('setRole', 'admin')
+            ->assertSee('Co-Admin Two')
+            ->assertDontSee('Member Store One')
+            ->call('setViewMode', 'table')
+            ->assertSet('viewMode', 'table')
+            ->assertSee('Co-Admin Two');
+    }
 }

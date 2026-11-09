@@ -9,9 +9,16 @@ use Illuminate\Database\Eloquent\Collection;
 interface StockRepositoryInterface
 {
     /**
-     * Get paginated stocks for a given user with optional status and search filters.
+     * Get paginated stocks for a given user with optional status, search, and category filters.
      */
-    public function forUser(int $userId, ?string $status = null, ?string $search = null, int $perPage = 10): LengthAwarePaginator;
+    public function forUser(int $userId, ?string $status = null, ?string $search = null, int $perPage = 10, ?string $category = null): LengthAwarePaginator;
+
+    /**
+     * Get aggregate inventory telemetry for a user (asset value, safe ratio, restock count, categories).
+     *
+     * @return array{total_items: int, total_asset_value: float, safe_stock_ratio: int, need_restock_count: int, categories: array<int, string>}
+     */
+    public function getTelemetryForUser(int $userId): array;
 
     /**
      * Get all stocks for a given user without pagination.

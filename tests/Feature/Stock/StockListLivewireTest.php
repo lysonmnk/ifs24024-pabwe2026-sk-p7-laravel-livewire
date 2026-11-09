@@ -308,4 +308,68 @@ class StockListLivewireTest extends TestCase
             ->call('closeAiModal')
             ->assertSet('showAiModal', false);
     }
+
+    public function test_category_filter_in_livewire(): void
+    {
+        $user = User::factory()->member()->create();
+        $this->actingAs($user);
+
+        Stock::factory()->create(['user_id' => $user->id, 'name' => 'Beras Pandan Wangi', 'category' => 'Sembako']);
+        Stock::factory()->create(['user_id' => $user->id, 'name' => 'Kopi Kapal Api', 'category' => 'Minuman']);
+
+        Livewire::test(StockList::class)
+            ->call('setCategory', 'Sembako')
+            ->assertSee('Beras Pandan Wangi')
+            ->assertDontSee('Kopi Kapal Api')
+            ->call('setCategory', 'Minuman')
+            ->assertSee('Kopi Kapal Api')
+            ->assertDontSee('Beras Pandan Wangi')
+            ->call('setCategory', 'Minuman')
+            ->assertSee('Beras Pandan Wangi')
+            ->assertSee('Kopi Kapal Api');
+    }
+
+    public function test_view_mode_toggle_in_livewire(): void
+    {
+        $user = User::factory()->member()->create();
+        $this->actingAs($user);
+
+        Livewire::test(StockList::class)
+            ->assertSet('viewMode', 'bento')
+            ->call('setViewMode', 'table')
+            ->assertSet('viewMode', 'table')
+            ->call('setViewMode', 'bento')
+            ->assertSet('viewMode', 'bento');
+    }
+
+    public function test_create_and_update_stock_with_bento_fields(): void
+    {
+        $user = User::factory()->member()->create();
+        $this->actingAs($user);
+
+        Livewire::test(StockList::class)
+            ->call('openCreateModal')
+            ->set('formName', 'Gula Pasir Gulaku 1kg')
+            ->set('formSku', 'STK-GLA-001')
+            ->set('formCategory', 'Bumbu')
+            ->set('formSupplier', 'PB Sri Makmur')
+            ->set('formRackLocation', 'Rak B-04')
+            ->set('formOrderStage', 'ready')
+            ->set('formQuantity', 85)
+            ->set('formUnit', 'pcs')
+            ->set('formPrice', 18000)
+            ->set('formMinStock', 10)
+            ->set('formStatus', 'available')
+            ->call('saveStock')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('stocks', [
+            'user_id' => $user->id,
+            'name' => 'Gula Pasir Gulaku 1kg',
+            'category' => 'Bumbu',
+            'supplier' => 'PB Sri Makmur',
+            'rack_location' => 'Rak B-04',
+            'order_stage' => 'ready',
+        ]);
+    }
 }

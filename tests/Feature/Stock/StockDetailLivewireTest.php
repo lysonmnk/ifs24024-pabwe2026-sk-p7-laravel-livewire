@@ -223,4 +223,73 @@ class StockDetailLivewireTest extends TestCase
             ->call('cancelDeleteCover')
             ->assertSet('confirmingCoverDeletion', false);
     }
+
+    public function test_update_stock_with_bento_fields(): void
+    {
+        $user = User::factory()->member()->create();
+        $stock = Stock::factory()->create([
+            'user_id' => $user->id,
+            'name' => 'Original Item',
+            'category' => 'Sembako',
+        ]);
+
+        $this->actingAs($user);
+
+        Livewire::test(StockDetail::class, ['stock' => $stock])
+            ->call('openEditModal')
+            ->set('name', 'Updated Rice Item')
+            ->set('category', 'Sembako Premium')
+            ->set('supplier', 'PB Sri Makmur')
+            ->set('rack_location', 'Rak A-02')
+            ->set('order_stage', 'ready')
+            ->call('saveStock')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('stocks', [
+            'id' => $stock->id,
+            'name' => 'Updated Rice Item',
+            'category' => 'Sembako Premium',
+            'supplier' => 'PB Sri Makmur',
+            'rack_location' => 'Rak A-02',
+            'order_stage' => 'ready',
+        ]);
+    }
+
+    public function test_save_description_inline(): void
+    {
+        $user = User::factory()->member()->create();
+        $stock = Stock::factory()->create([
+            'user_id' => $user->id,
+            'description' => 'Initial description',
+        ]);
+
+        $this->actingAs($user);
+
+        Livewire::test(StockDetail::class, ['stock' => $stock])
+            ->set('description', '### New Markdown Spec')
+            ->call('saveDescription')
+            ->assertHasNoErrors()
+            ->assertSet('description', '### New Markdown Spec');
+
+        $this->assertDatabaseHas('stocks', [
+            'id' => $stock->id,
+            'description' => '### New Markdown Spec',
+        ]);
+    }
+
+    public function test_toggle_barcode_modal(): void
+    {
+        $user = User::factory()->member()->create();
+        $stock = Stock::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user);
+
+        Livewire::test(StockDetail::class, ['stock' => $stock])
+            ->assertSet('showBarcodeModal', false)
+            ->call('toggleBarcodeModal')
+            ->assertSet('showBarcodeModal', true)
+            ->call('toggleBarcodeModal')
+            ->assertSet('showBarcodeModal', false);
+    }
 }
+

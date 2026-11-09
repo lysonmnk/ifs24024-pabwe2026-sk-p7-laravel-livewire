@@ -60,9 +60,19 @@ class AdminUserStockList extends Component
             10
         );
 
+        $userTotalSku = $this->user->stocks()->count();
+        $userTotalAssetValue = (float) ($this->user->stocks()->sum(\Illuminate\Support\Facades\DB::raw('quantity * COALESCE(price, 0)')) ?? 0);
+        $userSafeStockCount = $this->user->stocks()->where('status', 'available')->count();
+        $userSafeRatio = $userTotalSku > 0 ? (int) round(($userSafeStockCount / $userTotalSku) * 100) : 100;
+
         return view('livewire.admin.admin-user-stock-list', [
             'stocks' => $stocks,
             'statuses' => StockStatus::cases(),
+            'telemetry' => [
+                'total_sku' => $userTotalSku,
+                'total_asset_value' => $userTotalAssetValue,
+                'safe_ratio' => $userSafeRatio,
+            ],
         ]);
     }
 }

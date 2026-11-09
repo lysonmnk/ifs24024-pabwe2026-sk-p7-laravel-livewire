@@ -23,6 +23,10 @@ class StockDetail extends Component
     public string $name = '';
     public ?string $sku = null;
     public ?string $description = '';
+    public ?string $category = null;
+    public ?string $supplier = null;
+    public ?string $rack_location = null;
+    public string $order_stage = 'ready';
     public int $quantity = 0;
     public string $unit = 'pcs';
     public ?float $price = null;
@@ -31,6 +35,7 @@ class StockDetail extends Component
 
     public mixed $coverPhoto = null;
     public bool $showEditModal = false;
+    public bool $showBarcodeModal = false;
     public bool $confirmingStockDeletion = false;
     public bool $confirmingCoverDeletion = false;
 
@@ -47,6 +52,10 @@ class StockDetail extends Component
         $this->name = $this->stock->name;
         $this->sku = $this->stock->sku;
         $this->description = $this->stock->description ?? '';
+        $this->category = $this->stock->category ?? 'Sembako';
+        $this->supplier = $this->stock->supplier;
+        $this->rack_location = $this->stock->rack_location;
+        $this->order_stage = $this->stock->order_stage ?? 'ready';
         $this->quantity = $this->stock->quantity;
         $this->unit = $this->stock->unit ?? 'pcs';
         $this->price = $this->stock->price !== null ? (float) $this->stock->price : null;
@@ -121,6 +130,10 @@ class StockDetail extends Component
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'sku' => ['nullable', 'string', 'max:100'],
             'description' => ['nullable', 'string'],
+            'category' => ['nullable', 'string', 'max:100'],
+            'supplier' => ['nullable', 'string', 'max:150'],
+            'rack_location' => ['nullable', 'string', 'max:50'],
+            'order_stage' => ['nullable', 'string', 'in:ordered,verified,stored,ready'],
             'quantity' => ['required', 'integer', 'min:0'],
             'unit' => ['required', 'string', 'max:20'],
             'price' => ['nullable', 'numeric', 'min:0'],
@@ -132,6 +145,10 @@ class StockDetail extends Component
             'name' => $this->name,
             'sku' => $this->sku,
             'description' => $this->description,
+            'category' => $this->category,
+            'supplier' => $this->supplier,
+            'rack_location' => $this->rack_location,
+            'order_stage' => $this->order_stage ?: 'ready',
             'quantity' => $this->quantity,
             'unit' => $this->unit,
             'price' => $this->price,
@@ -166,8 +183,40 @@ class StockDetail extends Component
         return redirect()->route('stocks.index');
     }
 
+    public function toggleBarcodeModal(): void
+    {
+        $this->showBarcodeModal = !$this->showBarcodeModal;
+    }
+
+    public function saveDescription(StockService $stockService): void
+    {
+        Gate::authorize('update', $this->stock);
+
+        $this->validate([
+            'description' => ['nullable', 'string'],
+        ]);
+
+        $stockService->updateStock($this->stock, [
+            'description' => $this->description,
+        ]);
+
+        $this->stock->refresh();
+        $this->fillStockData();
+
+        session()->flash('success', 'Deskripsi stok berhasil disimpan.');
+    }
+
     public function render(): View
     {
-        return view('livewire.stock.stock-detail');
+        $min = $this->stock->min_stock > 0 ? $this->stock->min_stock : 1;
+        $bufferRatio = (int) round(($this->stock->quantity / $min) * 100);
+        $estimatedDays = max(1, (int) round($this->stock->quantity * 1.5));
+        $totalAssetValue = ($this->stock->price ?? 0) * $this->stock->quantity;
+
+        return view('livewire.stock.stock-detail', [
+            'bufferRatio' => $bufferRatio,
+            'estimatedDays' => $estimatedDays,
+            'totalAssetValue' => $totalAssetValue,
+        ]);
     }
 }

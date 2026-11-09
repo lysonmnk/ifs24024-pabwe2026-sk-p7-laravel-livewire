@@ -132,4 +132,54 @@ class StockRepositoryTest extends TestCase
         $this->assertTrue($result);
         $this->assertDatabaseCount('stocks', 2);
     }
+
+    public function test_for_user_with_category_filter(): void
+    {
+        $user = User::factory()->create();
+
+        Stock::factory()->create(['user_id' => $user->id, 'name' => 'Beras Pandan Wangi', 'category' => 'Sembako']);
+        Stock::factory()->create(['user_id' => $user->id, 'name' => 'Kopi Kapal Api', 'category' => 'Minuman']);
+
+        $sembako = $this->repository->forUser($user->id, category: 'Sembako');
+        $this->assertCount(1, $sembako);
+        $this->assertEquals('Beras Pandan Wangi', $sembako->first()->name);
+
+        $minuman = $this->repository->forUser($user->id, category: 'Minuman');
+        $this->assertCount(1, $minuman);
+        $this->assertEquals('Kopi Kapal Api', $minuman->first()->name);
+    }
+
+    public function test_get_telemetry_for_user(): void
+    {
+        $user = User::factory()->create();
+
+        // 1 safe item: qty 20, price 10000 -> 200000
+        Stock::factory()->create([
+            'user_id' => $user->id,
+            'name' => 'Item Safe',
+            'quantity' => 20,
+            'price' => 10000,
+            'min_stock' => 5,
+            'category' => 'Sembako',
+        ]);
+
+        // 1 critical item: qty 2, price 5000 -> 10000
+        Stock::factory()->create([
+            'user_id' => $user->id,
+            'name' => 'Item Critical',
+            'quantity' => 2,
+            'price' => 5000,
+            'min_stock' => 5,
+            'category' => 'Minuman',
+        ]);
+
+        $telemetry = $this->repository->getTelemetryForUser($user->id);
+
+        $this->assertEquals(2, $telemetry['total_items']);
+        $this->assertEquals(210000.0, $telemetry['total_asset_value']);
+        $this->assertEquals(1, $telemetry['need_restock_count']);
+        $this->assertEquals(50, $telemetry['safe_stock_ratio']);
+        $this->assertContains('Sembako', $telemetry['categories']);
+        $this->assertContains('Minuman', $telemetry['categories']);
+    }
 }

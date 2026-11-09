@@ -69,6 +69,24 @@ Route::middleware(['throttle:1000-per-second'])->group(function () {
             ->middleware('owns.stock')
             ->name('stocks.show');
 
+        // Kasir POS Route
+        Route::get('/pos', \App\Features\Pos\Livewire\PosTerminal::class)->name('pos.index');
+
+        // Riwayat Mutasi Stok & Audit Log Route
+        Route::get('/mutations', \App\Features\Stock\Livewire\StockMutationList::class)->name('mutations.index');
+
+        // Laporan Penjualan & Keuangan Route
+        Route::get('/reports', \App\Features\Stock\Livewire\SalesReport::class)->name('reports.index');
+
+        // Stitch Precision Bento Operations & Finance Modules
+        Route::get('/purchase-orders', \App\Features\Operations\Livewire\PurchaseOrderManager::class)->name('purchase-orders.index');
+        Route::get('/critical-stock', \App\Features\Stock\Livewire\CriticalStockAlert::class)->name('critical-stock.index');
+        Route::get('/stock-opname', \App\Features\Operations\Livewire\StockOpnameSession::class)->name('stock-opname.index');
+        Route::get('/debts', \App\Features\Finance\Livewire\CustomerDebtBook::class)->name('debts.index');
+        Route::get('/returns', \App\Features\Operations\Livewire\SupplierReturnClaim::class)->name('returns.index');
+        Route::get('/accounts-payable', \App\Features\Finance\Livewire\VendorPayableManager::class)->name('accounts-payable.index');
+        Route::get('/stock-transfers', \App\Features\Operations\Livewire\InterBranchTransfer::class)->name('stock-transfers.index');
+
         // User Profile Route
         Route::get('/profile', \App\Features\Profile\Livewire\Profile::class)->name('profile');
 

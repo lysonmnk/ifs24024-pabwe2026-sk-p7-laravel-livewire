@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
-#[Fillable(['user_id', 'name', 'sku', 'description', 'quantity', 'unit', 'price', 'min_stock', 'status', 'cover_image_path'])]
+#[Fillable(['user_id', 'name', 'sku', 'description', 'category', 'supplier', 'rack_location', 'quantity', 'unit', 'price', 'min_stock', 'status', 'order_stage', 'cover_image_path'])]
 class Stock extends Model
 {
     /** @use HasFactory<StockFactory> */

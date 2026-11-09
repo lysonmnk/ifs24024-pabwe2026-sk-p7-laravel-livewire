@@ -23,9 +23,11 @@ class StockList extends Component
 {
     use WithPagination, WithFileUploads;
 
-    // Filters
+    // Filters & View Mode
     public string $search = '';
     public string $statusFilter = '';
+    public string $categoryFilter = '';
+    public string $viewMode = 'bento';
 
     // Create / Edit Modal State
     public bool $showFormModal = false;
@@ -33,6 +35,10 @@ class StockList extends Component
     public string $formName = '';
     public ?string $formSku = null;
     public ?string $formDescription = null;
+    public ?string $formCategory = 'Sembako';
+    public ?string $formSupplier = null;
+    public ?string $formRackLocation = null;
+    public string $formOrderStage = 'ready';
     public int $formQuantity = 0;
     public string $formUnit = 'pcs';
     public ?float $formPrice = null;
@@ -58,6 +64,8 @@ class StockList extends Component
     protected $queryString = [
         'search' => ['except' => ''],
         'statusFilter' => ['except' => ''],
+        'categoryFilter' => ['except' => ''],
+        'viewMode' => ['except' => 'bento'],
     ];
 
     public function updatedSearch(): void
@@ -68,6 +76,22 @@ class StockList extends Component
     public function updatedStatusFilter(): void
     {
         $this->resetPage();
+    }
+
+    public function updatedCategoryFilter(): void
+    {
+        $this->resetPage();
+    }
+
+    public function setCategory(string $category): void
+    {
+        $this->categoryFilter = ($this->categoryFilter === $category) ? '' : $category;
+        $this->resetPage();
+    }
+
+    public function setViewMode(string $mode): void
+    {
+        $this->viewMode = in_array($mode, ['bento', 'table'], true) ? $mode : 'bento';
     }
 
     // --- CRUD Operations ---
@@ -88,6 +112,10 @@ class StockList extends Component
         $this->formName = $stock->name;
         $this->formSku = $stock->sku;
         $this->formDescription = $stock->description;
+        $this->formCategory = $stock->category ?? 'Sembako';
+        $this->formSupplier = $stock->supplier;
+        $this->formRackLocation = $stock->rack_location;
+        $this->formOrderStage = $stock->order_stage ?? 'ready';
         $this->formQuantity = $stock->quantity;
         $this->formUnit = $stock->unit ?? 'pcs';
         $this->formPrice = $stock->price !== null ? (float) $stock->price : null;
@@ -108,8 +136,12 @@ class StockList extends Component
             'formName',
             'formSku',
             'formDescription',
+            'formSupplier',
+            'formRackLocation',
             'formPrice',
         ]);
+        $this->formCategory = 'Sembako';
+        $this->formOrderStage = 'ready';
         $this->formQuantity = 0;
         $this->formUnit = 'pcs';
         $this->formMinStock = 5;
@@ -123,6 +155,10 @@ class StockList extends Component
             'formName' => ['required', 'string', 'max:255'],
             'formSku' => ['nullable', 'string', 'max:100'],
             'formDescription' => ['nullable', 'string'],
+            'formCategory' => ['nullable', 'string', 'max:100'],
+            'formSupplier' => ['nullable', 'string', 'max:150'],
+            'formRackLocation' => ['nullable', 'string', 'max:50'],
+            'formOrderStage' => ['nullable', 'string', 'in:ordered,verified,stored,ready'],
             'formQuantity' => ['required', 'integer', 'min:0'],
             'formUnit' => ['required', 'string', 'max:20'],
             'formPrice' => ['nullable', 'numeric', 'min:0'],
@@ -134,6 +170,10 @@ class StockList extends Component
             'name' => $this->formName,
             'sku' => $this->formSku,
             'description' => $this->formDescription,
+            'category' => $this->formCategory,
+            'supplier' => $this->formSupplier,
+            'rack_location' => $this->formRackLocation,
+            'order_stage' => $this->formOrderStage ?: 'ready',
             'quantity' => $this->formQuantity,
             'unit' => $this->formUnit,
             'price' => $this->formPrice,
@@ -287,16 +327,52 @@ class StockList extends Component
 
     public function render(StockService $stockService): View
     {
+        $userId = Auth::id() ?? 0;
         $stocks = $stockService->getStocksForUser(
-            Auth::id(),
+            $userId,
             $this->statusFilter ?: null,
             $this->search ?: null,
-            8
+            8,
+            $this->categoryFilter ?: null
         );
+
+        $telemetry = $stockService->getTelemetryForUser($userId);
+
+        $featuredStock = $stocks->first();
+
+        $alertQuery = Stock::where('user_id', $userId)
+            ->where(function ($q) {
+                $q->where('quantity', '<=', 5)
+                  ->orWhere('status', 'out_of_stock')
+                  ->orWhere('status', 'low_stock');
+            });
+
+        if (!empty($this->search)) {
+            $alertQuery->where(function ($q) {
+                $q->where('name', 'like', "%{$this->search}%")
+                  ->orWhere('sku', 'like', "%{$this->search}%")
+                  ->orWhere('description', 'like', "%{$this->search}%")
+                  ->orWhere('supplier', 'like', "%{$this->search}%")
+                  ->orWhere('rack_location', 'like', "%{$this->search}%");
+            });
+        }
+
+        if (!empty($this->categoryFilter)) {
+            $alertQuery->where('category', $this->categoryFilter);
+        }
+
+        if (!empty($this->statusFilter)) {
+            $alertQuery->where('status', $this->statusFilter);
+        }
+
+        $alertStocks = $alertQuery->latest('updated_at')->take(3)->get();
 
         return view('livewire.stock.stock-list', [
             'stocks' => $stocks,
             'statuses' => StockStatus::cases(),
+            'telemetry' => $telemetry,
+            'featuredStock' => $featuredStock,
+            'alertStocks' => $alertStocks,
         ]);
     }
 }

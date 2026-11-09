@@ -31,11 +31,21 @@ class StockService
     }
 
     /**
-     * Get paginated stocks for the specified user.
+     * Get paginated stocks for the specified user with optional category filter.
      */
-    public function getStocksForUser(int $userId, ?string $status = null, ?string $search = null, int $perPage = 10): LengthAwarePaginator
+    public function getStocksForUser(int $userId, ?string $status = null, ?string $search = null, int $perPage = 10, ?string $category = null): LengthAwarePaginator
     {
-        return $this->stockRepository->forUser($userId, $status, $search, $perPage);
+        return $this->stockRepository->forUser($userId, $status, $search, $perPage, $category);
+    }
+
+    /**
+     * Get aggregate inventory telemetry for a user.
+     *
+     * @return array{total_items: int, total_asset_value: float, safe_stock_ratio: int, need_restock_count: int, categories: array<int, string>}
+     */
+    public function getTelemetryForUser(int $userId): array
+    {
+        return $this->stockRepository->getTelemetryForUser($userId);
     }
 
     /**
@@ -57,11 +67,15 @@ class StockService
             'name' => $data['name'],
             'sku' => $data['sku'] ?? null,
             'description' => $data['description'] ?? null,
+            'category' => $data['category'] ?? null,
+            'supplier' => $data['supplier'] ?? null,
+            'rack_location' => $data['rack_location'] ?? null,
             'quantity' => $quantity,
             'unit' => $data['unit'] ?? 'pcs',
             'price' => $data['price'] ?? null,
             'min_stock' => $minStock,
             'status' => $status,
+            'order_stage' => $data['order_stage'] ?? 'ready',
             'cover_image_path' => $data['cover_image_path'] ?? null,
         ]);
     }
@@ -90,11 +104,15 @@ class StockService
             'name' => $data['name'] ?? $stock->name,
             'sku' => array_key_exists('sku', $data) ? $data['sku'] : $stock->sku,
             'description' => array_key_exists('description', $data) ? $data['description'] : $stock->description,
+            'category' => array_key_exists('category', $data) ? $data['category'] : $stock->category,
+            'supplier' => array_key_exists('supplier', $data) ? $data['supplier'] : $stock->supplier,
+            'rack_location' => array_key_exists('rack_location', $data) ? $data['rack_location'] : $stock->rack_location,
             'quantity' => $quantity,
             'unit' => $data['unit'] ?? $stock->unit,
             'price' => array_key_exists('price', $data) ? $data['price'] : $stock->price,
             'min_stock' => $minStock,
             'status' => $status,
+            'order_stage' => array_key_exists('order_stage', $data) ? $data['order_stage'] : $stock->order_stage,
             'cover_image_path' => array_key_exists('cover_image_path', $data) ? $data['cover_image_path'] : $stock->cover_image_path,
         ]);
     }
