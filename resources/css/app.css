@@ -103,3 +103,15 @@
     box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.65), inset 0 1px 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+.flip-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.flip-card-cell {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+
